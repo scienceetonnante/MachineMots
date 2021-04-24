@@ -10,8 +10,8 @@ import codecs
 from sys import argv
 
 # Build a dictionnary to check whether word already exists
-if len(argv) < 2: argv.append('en')
-filepath = "words_fr.txt" if argv[1] == 'fr' else "words_en.txt" 
+if len(argv) < 2: argv.append('fr')
+filepath = "words_en.txt" if argv[1] == 'en' else "words_fr.txt" 
 dico = []
 with codecs.open(filepath, "r", "utf-8") as lines:
     for l in  lines:
@@ -19,7 +19,7 @@ with codecs.open(filepath, "r", "utf-8") as lines:
  
 # Load the trigram count matrix and normalize it     
 count = np.fromfile(
-        "count_fr.bin" if argv[1] == 'fr' else "count_en.bin",
+        "count_en.bin" if argv[1] == 'en' else "count_fr.bin",
         dtype="int32").reshape(256,256,256)
 s=count.sum(axis=2)
 st=np.tile(s.T,(256,1,1)).T
