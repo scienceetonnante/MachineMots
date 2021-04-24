@@ -7,16 +7,20 @@ Checks whether the word already exists
 import numpy as np
 from numpy.random import choice
 import codecs
+from sys import argv
 
 # Build a dictionnary to check whether word already exists
-filepath = "liste.de.mots.francais.frgut.txt"
+if len(argv) < 2: argv.append('en')
+filepath = "words_fr.txt" if argv[1] == 'fr' else "words_en.txt" 
 dico = []
 with codecs.open(filepath, "r", "utf-8") as lines:
     for l in  lines:
         dico.append(l[:-1])
  
-# Load the trigram count matrixand normalize it     
-count = np.fromfile("count2D.bin",dtype="int32").reshape(256,256,256)
+# Load the trigram count matrix and normalize it     
+count = np.fromfile(
+        "count_fr.bin" if argv[1] == 'fr' else "count_en.bin",
+        dtype="int32").reshape(256,256,256)
 s=count.sum(axis=2)
 st=np.tile(s.T,(256,1,1)).T
 p=count.astype('float')/st
